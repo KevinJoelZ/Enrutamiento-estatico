@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Topología del laboratorio de enrutamiento estático con tres redes LAN interconectadas.">
+  <title>Topología IP | Enrutamiento Estático</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a class="nav__brand" href="../index.html">
+        <span class="nav__icon" aria-hidden="true">⬡</span>
+        Enrutamiento Estático
+      </a>
+      <button class="nav__toggle" type="button" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__links">
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="fundamentos.html">Fundamentos</a></li>
+        <li><a href="topologia.html">Topología</a></li>
+        <li><a href="configuracion-cli.html">CLI</a></li>
+        <li><a href="interfaz-grafica.html">GUI</a></li>
+        <li><a href="verificacion.html">Verificación</a></li>
+        <li><a href="laboratorio.html">Laboratorio</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <a href="../index.html">Inicio</a>
+        <span>/</span>
+        <span>Topología IP</span>
+      </nav>
+      <p class="hero__badge">Tema 02</p>
+      <h1>Topología y Direccionamiento IP</h1>
+      <p class="page-hero__lead">
+        Escenario de laboratorio con tres redes LAN conectadas en malla triangular mediante
+        tres routers Cisco 2911 en Packet Tracer.
+      </p>
+    </div>
+  </section>
+
+  <div class="container page-layout">
+    <aside class="sidebar">
+      <h2>Temas</h2>
+      <a href="fundamentos.html">01 · Fundamentos</a>
+      <a class="is-active" href="topologia.html">02 · Topología IP</a>
+      <a href="configuracion-cli.html">03 · Configuración CLI</a>
+      <a href="interfaz-grafica.html">04 · Interfaz gráfica</a>
+      <a href="verificacion.html">05 · Verificación</a>
+      <a href="laboratorio.html">06 · Laboratorio</a>
+    </aside>
+
+    <article class="page-content">
+      <h2>Visión general del escenario</h2>
+      <p>
+        El laboratorio implementa tres segmentos de red (<strong>Red 1</strong>, <strong>Red 2</strong>
+        y <strong>Red 3</strong>), cada uno con un switch 2960, hosts finales (PC y laptops) y un
+        router 2911 como gateway. Los routers se interconectan formando una topología triangular,
+        lo que obliga a configurar rutas estáticas en cada equipo para alcanzar redes remotas.
+      </p>
+
+      <figure class="figure-showcase">
+        <button class="gallery__trigger" type="button" data-src="../Capturas/4.jpeg" data-caption="Topología completa con tres redes LAN y enlaces WAN etiquetados">
+          <img src="../Capturas/4.jpeg" alt="Topología de tres redes conectadas por enrutamiento estático en Packet Tracer" loading="lazy">
+        </button>
+        <figcaption>Topología completa: Red 1, Red 2 y Red 3 interconectadas con rutas estáticas entre routers.</figcaption>
+      </figure>
+
+      <h2>Redes LAN (segmentos de usuario)</h2>
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Red</th>
+              <th>Dirección</th>
+              <th>Gateway</th>
+              <th>Router</th>
+              <th>Hosts de ejemplo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Red 1</td>
+              <td><code>192.168.100.0/24</code></td>
+              <td><code>192.168.100.1</code></td>
+              <td>Router0 · Gig0/0</td>
+              <td>PC0 (.2), Laptop0 (.3), PC3 (.4)</td>
+            </tr>
+            <tr>
+              <td>Red 2</td>
+              <td><code>192.168.200.0/24</code></td>
+              <td><code>192.168.200.4</code></td>
+              <td>Router2 · Gig0/0</td>
+              <td>PC1 (.5), Laptop1 (.6), PC4 (.7)</td>
+            </tr>
+            <tr>
+              <td>Red 3</td>
+              <td><code>192.168.210.0/24</code></td>
+              <td><code>192.168.210.7</code></td>
+              <td>Router1 · Gig0/0</td>
+              <td>PC2 (.8), Laptop2 (.9), PC5 (.10)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Enlaces entre routers (WAN)</h2>
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Enlace</th>
+              <th>Red</th>
+              <th>Router A</th>
+              <th>Router B</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Router0 ↔ Router2</td>
+              <td><code>192.168.110.0/24</code></td>
+              <td>Router0 Gig0/1 → <code>.1</code></td>
+              <td>Router2 Gig0/1 → <code>.2</code></td>
+            </tr>
+            <tr>
+              <td>Router2 ↔ Router1</td>
+              <td><code>192.168.150.0/24</code></td>
+              <td>Router2 Gig0/2 → <code>.1</code></td>
+              <td>Router1 Gig0/1 → <code>.2</code></td>
+            </tr>
+            <tr>
+              <td>Router0 ↔ Router1</td>
+              <td><code>192.168.205.0/24</code></td>
+              <td>Router0 Gig0/2 → <code>.1</code></td>
+              <td>Router1 Gig0/2 → <code>.2</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Flujo de tráfico entre redes</h2>
+      <p>
+        Si <strong>PC0</strong> (<code>192.168.100.2</code>) envía un paquete a <strong>PC1</strong>
+        (<code>192.168.200.5</code>), el flujo es el siguiente:
+      </p>
+      <ol class="steps-list">
+        <li>PC0 envía el paquete a su gateway <code>192.168.100.1</code> (Router0).</li>
+        <li>Router0 consulta su tabla y encuentra la ruta hacia <code>192.168.200.0/24</code> vía <code>192.168.110.2</code>.</li>
+        <li>Router2 recibe el paquete y lo entrega directamente a la LAN Red 2 por Gig0/0.</li>
+        <li>El switch reenvía el tráfico hacia PC1.</li>
+      </ol>
+
+      <figure class="figure-showcase">
+        <button class="gallery__trigger" type="button" data-src="../Capturas/6.jpg" data-caption="Vista del escenario con simulación de tráfico ICMP entre hosts">
+          <img src="../Capturas/6.jpg" alt="Escenario de laboratorio con pruebas de conectividad entre redes" loading="lazy">
+        </button>
+        <figcaption>Simulación de tráfico: las pruebas ICMP confirman conectividad entre redes una vez configuradas las rutas.</figcaption>
+      </figure>
+
+      <div class="callout">
+        <p>Cada router debe conocer las redes que <strong>no</strong> tiene conectadas directamente. Sin rutas estáticas, solo habría comunicación dentro de cada LAN local.</p>
+      </div>
+
+      <nav class="topic-nav" aria-label="Navegación entre temas">
+        <a href="fundamentos.html">
+          <span class="topic-nav__label">Anterior</span>
+          <span class="topic-nav__title">← Fundamentos</span>
+        </a>
+        <a class="topic-nav__next" href="configuracion-cli.html">
+          <span class="topic-nav__label">Siguiente</span>
+          <span class="topic-nav__title">Configuración CLI →</span>
+        </a>
+      </nav>
+    </article>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© <span id="current-year">2026</span> Enrutamiento Estático · Manejo de Redes Avanzadas · ITECSUR</p>
+      <p class="site-footer__meta">Material académico · TSUDS · 5.º Semestre</p>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox" hidden aria-hidden="true">
+    <button class="lightbox__close" type="button" aria-label="Cerrar imagen">&times;</button>
+    <figure class="lightbox__figure">
+      <img class="lightbox__img" src="" alt="">
+      <figcaption class="lightbox__caption"></figcaption>
+    </figure>
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

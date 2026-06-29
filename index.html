@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Guía sobre enrutamiento estático: conceptos, configuración, ventajas y práctica en redes Cisco.">
+  <title>Enrutamiento Estático | Manejo de Redes Avanzadas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header" id="inicio">
+    <nav class="nav container">
+      <a class="nav__brand" href="index.html">
+        <span class="nav__icon" aria-hidden="true">⬡</span>
+        Enrutamiento Estático
+      </a>
+      <button class="nav__toggle" type="button" aria-label="Abrir menú" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav__links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="temas/fundamentos.html">Fundamentos</a></li>
+        <li><a href="temas/topologia.html">Topología</a></li>
+        <li><a href="temas/configuracion-cli.html">CLI</a></li>
+        <li><a href="temas/interfaz-grafica.html">GUI</a></li>
+        <li><a href="temas/verificacion.html">Verificación</a></li>
+        <li><a href="temas/laboratorio.html">Laboratorio</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero__bg" aria-hidden="true"></div>
+      <div class="container hero__content">
+        <p class="hero__badge">Manejo de Redes Avanzadas · ITECSUR</p>
+        <h1>Enrutamiento Estático</h1>
+        <p class="hero__lead">
+          Fundamentos, configuración y buenas prácticas para definir rutas de forma manual
+          en redes de área local y wide area, garantizando conectividad predecible entre segmentos.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#temas">Explorar temas</a>
+          <a class="btn btn--ghost" href="temas/laboratorio.html">Ver laboratorio</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="introduccion">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label">Introducción</span>
+          <h2>¿De qué trata este material?</h2>
+        </div>
+        <div class="intro-grid">
+          <article class="card card--highlight">
+            <p>
+              El <strong>enrutamiento estático</strong> es el proceso mediante el cual un administrador
+              de red configura manualmente las entradas de la tabla de enrutamiento de un router.
+              A diferencia del enrutamiento dinámico, no existe intercambio automático de información
+              entre equipos: cada ruta se define de forma explícita.
+            </p>
+            <p>
+              Este enfoque es ideal en topologías pequeñas, enlaces punto a punto, rutas de respaldo
+              o segmentos donde se requiere control total sobre el tráfico. En este sitio revisamos
+              los conceptos teóricos, los comandos de configuración en equipos Cisco y la evidencia
+              práctica de laboratorio.
+            </p>
+          </article>
+          <aside class="info-panel">
+            <h3>Objetivos de aprendizaje</h3>
+            <ul>
+              <li>Comprender cuándo usar rutas estáticas frente a dinámicas.</li>
+              <li>Configurar rutas directas, flotantes y por defecto.</li>
+              <li>Verificar conectividad con <code>ping</code> y <code>show ip route</code>.</li>
+              <li>Interpretar tablas de enrutamiento en escenarios reales.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt" id="temas">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label">Temas</span>
+          <h2>Contenido del curso</h2>
+          <p class="section__desc">
+            Seis módulos con teoría, configuraciones reales del laboratorio, interfaz gráfica de
+            Packet Tracer, verificación y evidencia práctica.
+          </p>
+        </div>
+        <div class="topics-grid">
+          <a class="topic-card topic-card--link" href="temas/fundamentos.html">
+            <span class="topic-card__num">01</span>
+            <h3>Fundamentos del Enrutamiento Estático</h3>
+            <p>Conceptos, tabla de enrutamiento, tipos de rutas y comparación con enrutamiento dinámico.</p>
+            <span class="topic-card__cta">Ver tema →</span>
+          </a>
+          <a class="topic-card topic-card--link" href="temas/topologia.html">
+            <span class="topic-card__num">02</span>
+            <h3>Topología y Direccionamiento IP</h3>
+            <p>Tres redes LAN en malla triangular: direccionamiento, gateways y enlaces WAN del laboratorio.</p>
+            <span class="topic-card__cta">Ver tema →</span>
+          </a>
+          <a class="topic-card topic-card--link" href="temas/configuracion-cli.html">
+            <span class="topic-card__num">03</span>
+            <h3>Configuración por CLI</h3>
+            <p>Comandos Cisco IOS completos para Router0, Router1 y Router2 con rutas estáticas reales.</p>
+            <span class="topic-card__cta">Ver tema →</span>
+          </a>
+          <a class="topic-card topic-card--link" href="temas/interfaz-grafica.html">
+            <span class="topic-card__num">04</span>
+            <h3>Interfaz Gráfica (Packet Tracer)</h3>
+            <p>Configuración visual de interfaces y rutas estáticas con equivalencia en comandos IOS.</p>
+            <span class="topic-card__cta">Ver tema →</span>
+          </a>
+          <a class="topic-card topic-card--link" href="temas/verificacion.html">
+            <span class="topic-card__num">05</span>
+            <h3>Verificación y Diagnóstico</h3>
+            <p><code>show ip route</code>, ping, traceroute, interpretación de códigos y resolución de fallos.</p>
+            <span class="topic-card__cta">Ver tema →</span>
+          </a>
+          <a class="topic-card topic-card--link" href="temas/laboratorio.html">
+            <span class="topic-card__num">06</span>
+            <h3>Laboratorio Práctico</h3>
+            <p>Galería completa de capturas, video demostrativo y pasos del escenario implementado.</p>
+            <span class="topic-card__cta">Ver tema →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="preview">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label">Vista previa</span>
+          <h2>Escenario del laboratorio</h2>
+          <p class="section__desc">Topología implementada en Cisco Packet Tracer con enrutamiento estático entre tres redes.</p>
+        </div>
+        <figure class="figure-showcase">
+          <button class="gallery__trigger" type="button" data-src="Capturas/4.jpeg" data-caption="Topología triangular — Red 1, Red 2 y Red 3">
+            <img src="Capturas/4.jpeg" alt="Topología del laboratorio de enrutamiento estático" loading="lazy">
+          </button>
+          <figcaption>Haz clic para ampliar · Detalle completo en el tema de Topología y Laboratorio.</figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© <span id="current-year">2026</span> Enrutamiento Estático · Manejo de Redes Avanzadas · ITECSUR</p>
+      <p class="site-footer__meta">Material académico · TSUDS · 5.º Semestre</p>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox" hidden aria-hidden="true">
+    <button class="lightbox__close" type="button" aria-label="Cerrar imagen">&times;</button>
+    <figure class="lightbox__figure">
+      <img class="lightbox__img" src="" alt="">
+      <figcaption class="lightbox__caption"></figcaption>
+    </figure>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

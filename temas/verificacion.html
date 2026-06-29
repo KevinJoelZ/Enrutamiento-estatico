@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Verificación y diagnóstico de enrutamiento estático con ping, traceroute y show ip route.">
+  <title>Verificación | Enrutamiento Estático</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a class="nav__brand" href="../index.html">
+        <span class="nav__icon" aria-hidden="true">⬡</span>
+        Enrutamiento Estático
+      </a>
+      <button class="nav__toggle" type="button" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__links">
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="fundamentos.html">Fundamentos</a></li>
+        <li><a href="topologia.html">Topología</a></li>
+        <li><a href="configuracion-cli.html">CLI</a></li>
+        <li><a href="interfaz-grafica.html">GUI</a></li>
+        <li><a href="verificacion.html">Verificación</a></li>
+        <li><a href="laboratorio.html">Laboratorio</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <a href="../index.html">Inicio</a>
+        <span>/</span>
+        <span>Verificación</span>
+      </nav>
+      <p class="hero__badge">Tema 05</p>
+      <h1>Verificación y Diagnóstico</h1>
+      <p class="page-hero__lead">
+        Comandos y métodos para comprobar que las rutas estáticas funcionan correctamente y
+        resolver fallos de conectividad entre redes.
+      </p>
+    </div>
+  </section>
+
+  <div class="container page-layout">
+    <aside class="sidebar">
+      <h2>Temas</h2>
+      <a href="fundamentos.html">01 · Fundamentos</a>
+      <a href="topologia.html">02 · Topología IP</a>
+      <a href="configuracion-cli.html">03 · Configuración CLI</a>
+      <a href="interfaz-grafica.html">04 · Interfaz gráfica</a>
+      <a class="is-active" href="verificacion.html">05 · Verificación</a>
+      <a href="laboratorio.html">06 · Laboratorio</a>
+    </aside>
+
+    <article class="page-content">
+      <h2>Comandos de verificación en el router</h2>
+      <h3>Tabla de enrutamiento completa</h3>
+      <pre class="code-block"><code>Router# show ip route</code></pre>
+      <p>
+        Muestra todas las rutas conocidas. Las rutas estáticas aparecen marcadas con una
+        <strong>S</strong> al inicio de la línea. Ejemplo esperado en Router0:
+      </p>
+      <pre class="code-block"><code>S    192.168.200.0/24 [1/0] via 192.168.110.2
+S    192.168.210.0/24 [1/0] via 192.168.205.2
+C    192.168.100.0/24 is directly connected, GigabitEthernet0/0
+C    192.168.110.0/24 is directly connected, GigabitEthernet0/1
+C    192.168.205.0/24 is directly connected, GigabitEthernet0/2</code></pre>
+
+      <h3>Solo rutas estáticas</h3>
+      <pre class="code-block"><code>Router# show ip route static</code></pre>
+
+      <h3>Configuración activa</h3>
+      <pre class="code-block"><code>Router# show running-config | section ip route
+Router# show ip interface brief</code></pre>
+      <p>
+        El primer comando filtra únicamente las líneas de rutas estáticas. El segundo confirma
+        que las interfaces están <code>up/up</code> y tienen la IP correcta.
+      </p>
+
+      <h2>Pruebas de conectividad</h2>
+      <h3>Desde el router</h3>
+      <pre class="code-block"><code>Router# ping 192.168.200.5
+Router# ping 192.168.210.8
+Router# traceroute 192.168.200.5</code></pre>
+
+      <h3>Desde los PCs (Packet Tracer)</h3>
+      <p>Abre el PC → pestaña <strong>Desktop</strong> → <strong>Command Prompt</strong>:</p>
+      <pre class="code-block"><code>C:\> ping 192.168.200.5    ! PC0 (Red 1) hacia PC1 (Red 2)
+C:\> ping 192.168.210.8    ! PC0 (Red 1) hacia PC2 (Red 3)
+C:\> tracert 192.168.210.8</code></pre>
+
+      <figure class="figure-showcase">
+        <button class="gallery__trigger" type="button" data-src="../Capturas/4.jpeg" data-caption="Panel de simulación con pruebas ICMP exitosas entre redes">
+          <img src="../Capturas/4.jpeg" alt="Resultados de ping exitosos entre redes en Packet Tracer" loading="lazy">
+        </button>
+        <figcaption>Panel de simulación: las pruebas ICMP entre PC5, Laptop1 y Laptop0 muestran estado exitoso cuando las rutas están bien configuradas.</figcaption>
+      </figure>
+
+      <h2>Interpretación de códigos en la tabla</h2>
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Significado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>C</code></td>
+              <td>Red conectada directamente (Connected)</td>
+            </tr>
+            <tr>
+              <td><code>S</code></td>
+              <td>Ruta estática (Static)</td>
+            </tr>
+            <tr>
+              <td><code>R</code></td>
+              <td>RIP (dinámico)</td>
+            </tr>
+            <tr>
+              <td><code>O</code></td>
+              <td>OSPF (dinámico)</td>
+            </tr>
+            <tr>
+              <td><code>[1/0]</code></td>
+              <td>[distancia administrativa/métrica]</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Errores frecuentes y solución</h2>
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Síntoma</th>
+              <th>Causa probable</th>
+              <th>Solución</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ping falla entre LANs</td>
+              <td>Falta ruta estática en algún router</td>
+              <td>Revisar <code>show ip route</code> en cada router del camino</td>
+            </tr>
+            <tr>
+              <td>Ruta estática no aparece</td>
+              <td>Next-hop inalcanzable</td>
+              <td>Verificar IP del enlace WAN y que la interfaz esté up</td>
+            </tr>
+            <tr>
+              <td>Ping OK en router, falla en PC</td>
+              <td>Gateway incorrecto en el host</td>
+              <td>Configurar default gateway del PC al router local</td>
+            </tr>
+            <tr>
+              <td>Interfaz administratively down</td>
+              <td>No se aplicó <code>no shutdown</code></td>
+              <td>Entrar a la interfaz y ejecutar <code>no shutdown</code></td>
+            </tr>
+            <tr>
+              <td>Next-hop incorrecto</td>
+              <td>Confusión entre routers vecinos</td>
+              <td>Consultar tabla de enlaces WAN en la topología</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <figure class="figure-showcase">
+        <button class="gallery__trigger" type="button" data-src="../Capturas/6.jpg" data-caption="Diagnóstico de tráfico ICMP en el escenario">
+          <img src="../Capturas/6.jpg" alt="Lista de eventos de simulación con pruebas ICMP en progreso o fallidas" loading="lazy">
+        </button>
+        <figcaption>La lista de eventos de simulación ayuda a identificar en qué salto falla el tráfico cuando aún no hay rutas completas.</figcaption>
+      </figure>
+
+      <h2>Checklist de verificación</h2>
+      <ul class="styled-list">
+        <li>Todas las interfaces tienen IP y están <code>up/up</code>.</li>
+        <li>Cada router tiene rutas hacia las dos redes remotas.</li>
+        <li>Los PCs tienen IP, máscara y gateway correctos.</li>
+        <li><code>ping</code> funciona entre hosts de distintas LANs.</li>
+        <li><code>tracert</code> muestra el camino esperado por los routers.</li>
+      </ul>
+
+      <nav class="topic-nav" aria-label="Navegación entre temas">
+        <a href="interfaz-grafica.html">
+          <span class="topic-nav__label">Anterior</span>
+          <span class="topic-nav__title">← Interfaz gráfica</span>
+        </a>
+        <a class="topic-nav__next" href="laboratorio.html">
+          <span class="topic-nav__label">Siguiente</span>
+          <span class="topic-nav__title">Laboratorio práctico →</span>
+        </a>
+      </nav>
+    </article>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© <span id="current-year">2026</span> Enrutamiento Estático · Manejo de Redes Avanzadas · ITECSUR</p>
+      <p class="site-footer__meta">Material académico · TSUDS · 5.º Semestre</p>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox" hidden aria-hidden="true">
+    <button class="lightbox__close" type="button" aria-label="Cerrar imagen">&times;</button>
+    <figure class="lightbox__figure">
+      <img class="lightbox__img" src="" alt="">
+      <figcaption class="lightbox__caption"></figcaption>
+    </figure>
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

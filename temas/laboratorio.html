@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Laboratorio práctico de enrutamiento estático con capturas y video demostrativo.">
+  <title>Laboratorio | Enrutamiento Estático</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a class="nav__brand" href="../index.html">
+        <span class="nav__icon" aria-hidden="true">⬡</span>
+        Enrutamiento Estático
+      </a>
+      <button class="nav__toggle" type="button" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__links">
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="fundamentos.html">Fundamentos</a></li>
+        <li><a href="topologia.html">Topología</a></li>
+        <li><a href="configuracion-cli.html">CLI</a></li>
+        <li><a href="interfaz-grafica.html">GUI</a></li>
+        <li><a href="verificacion.html">Verificación</a></li>
+        <li><a href="laboratorio.html">Laboratorio</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <a href="../index.html">Inicio</a>
+        <span>/</span>
+        <span>Laboratorio</span>
+      </nav>
+      <p class="hero__badge">Tema 06</p>
+      <h1>Laboratorio Práctico</h1>
+      <p class="page-hero__lead">
+        Evidencia completa del escenario: topología, configuraciones GUI, pruebas de conectividad
+        y video demostrativo del enrutamiento estático.
+      </p>
+    </div>
+  </section>
+
+  <div class="container page-layout">
+    <aside class="sidebar">
+      <h2>Temas</h2>
+      <a href="fundamentos.html">01 · Fundamentos</a>
+      <a href="topologia.html">02 · Topología IP</a>
+      <a href="configuracion-cli.html">03 · Configuración CLI</a>
+      <a href="interfaz-grafica.html">04 · Interfaz gráfica</a>
+      <a href="verificacion.html">05 · Verificación</a>
+      <a class="is-active" href="laboratorio.html">06 · Laboratorio</a>
+    </aside>
+
+    <article class="page-content">
+      <h2>Objetivo del laboratorio</h2>
+      <p>
+        Implementar conectividad end-to-end entre tres redes LAN utilizando únicamente
+        enrutamiento estático en tres routers Cisco 2911 dentro de Packet Tracer. Al finalizar,
+        cualquier host debe poder comunicarse con hosts de las otras redes mediante
+        <code>ping</code> y <code>tracert</code>.
+      </p>
+
+      <h2>Video demostrativo</h2>
+      <div class="video-wrapper">
+        <video controls preload="metadata" poster="../Capturas/4.jpeg">
+          <source src="../Video/Enrutamiento%20Est%C3%A1tico.mp4" type="video/mp4">
+          Tu navegador no soporta la reproducción de video HTML5.
+        </video>
+      </div>
+      <p class="video-note">Recorrido completo del laboratorio: configuración, verificación y pruebas de conectividad.</p>
+
+      <h2>Galería de capturas</h2>
+      <p>Haz clic en cualquier imagen para ampliarla.</p>
+
+      <figure class="figure-showcase">
+        <button class="gallery__trigger" type="button" data-src="../Capturas/4.jpeg" data-caption="Topología triangular con tres redes LAN">
+          <img src="../Capturas/4.jpeg" alt="Topología completa del laboratorio" loading="lazy">
+        </button>
+        <figcaption>Topología general — tres redes conectadas en malla con enlaces WAN etiquetados.</figcaption>
+      </figure>
+
+      <div class="figure-grid">
+        <figure class="figure-showcase">
+          <button class="gallery__trigger" type="button" data-src="../Capturas/1.jpeg" data-caption="Router0 — rutas estáticas GUI">
+            <img src="../Capturas/1.jpeg" alt="Configuración Router0" loading="lazy">
+          </button>
+          <figcaption>Router0 — rutas hacia Red 2 y Red 3.</figcaption>
+        </figure>
+        <figure class="figure-showcase">
+          <button class="gallery__trigger" type="button" data-src="../Capturas/2.jpeg" data-caption="Router1 — rutas estáticas GUI">
+            <img src="../Capturas/2.jpeg" alt="Configuración Router1" loading="lazy">
+          </button>
+          <figcaption>Router1 — rutas hacia Red 1 y Red 2.</figcaption>
+        </figure>
+      </div>
+
+      <figure class="figure-showcase">
+        <button class="gallery__trigger" type="button" data-src="../Capturas/3.jpeg" data-caption="Router2 — rutas estáticas GUI">
+          <img src="../Capturas/3.jpeg" alt="Configuración Router2" loading="lazy">
+        </button>
+        <figcaption>Router2 — rutas hacia Red 1 y Red 3.</figcaption>
+      </figure>
+
+      <div class="figure-grid">
+        <figure class="figure-showcase">
+          <button class="gallery__trigger" type="button" data-src="../Capturas/5.jpg" data-caption="Configuración de interfaz WAN">
+            <img src="../Capturas/5.jpg" alt="Configuración de interfaz GigabitEthernet" loading="lazy">
+          </button>
+          <figcaption>Configuración de interfaz Gig0/1 con IP 192.168.110.1.</figcaption>
+        </figure>
+        <figure class="figure-showcase">
+          <button class="gallery__trigger" type="button" data-src="../Capturas/6.jpg" data-caption="Simulación de tráfico ICMP">
+            <img src="../Capturas/6.jpg" alt="Simulación de tráfico entre hosts" loading="lazy">
+          </button>
+          <figcaption>Simulación de tráfico ICMP entre hosts de distintas redes.</figcaption>
+        </figure>
+      </div>
+
+      <h2>Pasos realizados</h2>
+      <ol class="steps-list">
+        <li>Diseño de topología con 3 routers, 3 switches y hosts en cada LAN.</li>
+        <li>Asignación de direccionamiento IP a interfaces y hosts.</li>
+        <li>Configuración de rutas estáticas en cada router (GUI y/o CLI).</li>
+        <li>Verificación con <code>show ip route</code> y pruebas <code>ping</code>.</li>
+        <li>Simulación de tráfico y documentación con capturas y video.</li>
+      </ol>
+
+      <div class="callout">
+        <p>Consulta los temas anteriores para el detalle teórico, los comandos CLI completos y la guía de resolución de problemas.</p>
+      </div>
+
+      <nav class="topic-nav" aria-label="Navegación entre temas">
+        <a href="verificacion.html">
+          <span class="topic-nav__label">Anterior</span>
+          <span class="topic-nav__title">← Verificación</span>
+        </a>
+        <a class="topic-nav__next" href="../index.html">
+          <span class="topic-nav__label">Volver</span>
+          <span class="topic-nav__title">Página principal →</span>
+        </a>
+      </nav>
+    </article>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© <span id="current-year">2026</span> Enrutamiento Estático · Manejo de Redes Avanzadas · ITECSUR</p>
+      <p class="site-footer__meta">Material académico · TSUDS · 5.º Semestre</p>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox" hidden aria-hidden="true">
+    <button class="lightbox__close" type="button" aria-label="Cerrar imagen">&times;</button>
+    <figure class="lightbox__figure">
+      <img class="lightbox__img" src="" alt="">
+      <figcaption class="lightbox__caption"></figcaption>
+    </figure>
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

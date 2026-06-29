@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Fundamentos del enrutamiento estático: conceptos, tabla de enrutamiento y tipos de rutas.">
+  <title>Fundamentos | Enrutamiento Estático</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a class="nav__brand" href="../index.html">
+        <span class="nav__icon" aria-hidden="true">⬡</span>
+        Enrutamiento Estático
+      </a>
+      <button class="nav__toggle" type="button" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__links">
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="fundamentos.html">Fundamentos</a></li>
+        <li><a href="topologia.html">Topología</a></li>
+        <li><a href="configuracion-cli.html">CLI</a></li>
+        <li><a href="interfaz-grafica.html">GUI</a></li>
+        <li><a href="verificacion.html">Verificación</a></li>
+        <li><a href="laboratorio.html">Laboratorio</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <a href="../index.html">Inicio</a>
+        <span>/</span>
+        <span>Fundamentos</span>
+      </nav>
+      <p class="hero__badge">Tema 01</p>
+      <h1>Fundamentos del Enrutamiento Estático</h1>
+      <p class="page-hero__lead">
+        Bases teóricas para comprender cómo un router reenvía tráfico cuando las rutas
+        son definidas manualmente por el administrador de red.
+      </p>
+    </div>
+  </section>
+
+  <div class="container page-layout">
+    <aside class="sidebar">
+      <h2>Temas</h2>
+      <a class="is-active" href="fundamentos.html">01 · Fundamentos</a>
+      <a href="topologia.html">02 · Topología IP</a>
+      <a href="configuracion-cli.html">03 · Configuración CLI</a>
+      <a href="interfaz-grafica.html">04 · Interfaz gráfica</a>
+      <a href="verificacion.html">05 · Verificación</a>
+      <a href="laboratorio.html">06 · Laboratorio</a>
+    </aside>
+
+    <article class="page-content">
+      <h2>¿Qué es el enrutamiento estático?</h2>
+      <p>
+        El enrutamiento estático consiste en agregar entradas de forma manual a la tabla de
+        enrutamiento de un router. Cada entrada indica cómo llegar a una red destino que no
+        está conectada directamente. A diferencia de protocolos dinámicos (RIP, OSPF, EIGRP),
+        no hay intercambio automático de información entre routers.
+      </p>
+      <p>
+        Cuando un paquete llega al router, este consulta la tabla buscando la coincidencia de
+        prefijo más específica (<em>longest prefix match</em>). Si encuentra una ruta válida,
+        reenvía el paquete al siguiente salto (<em>next-hop</em>) o por la interfaz indicada.
+      </p>
+
+      <div class="callout">
+        <p><strong>Distancia administrativa:</strong> en rutas estáticas el valor por defecto es <code>1</code>. Cuanto menor sea, más confiable se considera la ruta frente a otras fuentes.</p>
+      </div>
+
+      <h2>Componentes de una ruta estática</h2>
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Elemento</th>
+              <th>Descripción</th>
+              <th>Ejemplo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Red destino</td>
+              <td>Dirección de red remota a alcanzar</td>
+              <td><code>192.168.200.0</code></td>
+            </tr>
+            <tr>
+              <td>Máscara</td>
+              <td>Define el tamaño del prefijo</td>
+              <td><code>255.255.255.0</code></td>
+            </tr>
+            <tr>
+              <td>Next-hop</td>
+              <td>IP del router vecino hacia el destino</td>
+              <td><code>192.168.110.2</code></td>
+            </tr>
+            <tr>
+              <td>Interfaz de salida</td>
+              <td>Alternativa al next-hop en enlaces punto a punto</td>
+              <td><code>GigabitEthernet0/1</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Tipos de rutas estáticas</h2>
+      <h3>Ruta estática estándar</h3>
+      <p>
+        Define el camino hacia una red remota concreta. Es la más usada en laboratorios y
+        redes pequeñas. En nuestro escenario, Router0 necesita una ruta hacia
+        <code>192.168.200.0/24</code> para que los hosts de Red 1 lleguen a Red 2.
+      </p>
+
+      <h3>Ruta por defecto</h3>
+      <p>
+        También llamada <em>gateway of last resort</em>. Se configura con destino
+        <code>0.0.0.0 0.0.0.0</code> y se usa cuando no existe otra coincidencia en la tabla.
+        Es habitual en routers de borde conectados a Internet.
+      </p>
+      <pre class="code-block"><code>Router(config)# ip route 0.0.0.0 0.0.0.0 203.0.113.1</code></pre>
+
+      <h3>Ruta flotante</h3>
+      <p>
+        Ruta de respaldo con distancia administrativa mayor (por ejemplo, 10 o 100). Permite
+        tener un camino alternativo que solo se activa si la ruta principal deja de estar
+        disponible.
+      </p>
+      <pre class="code-block"><code>! Ruta principal (AD 1)
+Router(config)# ip route 192.168.200.0 255.255.255.0 192.168.110.2
+
+! Ruta flotante de respaldo (AD 10)
+Router(config)# ip route 192.168.200.0 255.255.255.0 192.168.205.2 10</code></pre>
+
+      <h2>Estático vs. dinámico</h2>
+      <div class="pros-cons">
+        <div class="pros-cons__col pros-cons__col--pro">
+          <h4>Cuándo usar estático</h4>
+          <ul>
+            <li>Redes pequeñas o de laboratorio.</li>
+            <li>Enlaces punto a punto sin vecinos dinámicos.</li>
+            <li>Rutas de borde o respaldo controladas.</li>
+            <li>Cuando se requiere trazabilidad total del tráfico.</li>
+          </ul>
+        </div>
+        <div class="pros-cons__col pros-cons__col--con">
+          <h4>Limitaciones</h4>
+          <ul>
+            <li>No converge automáticamente ante fallos.</li>
+            <li>Escala mal en topologías grandes.</li>
+            <li>Requiere intervención manual en cada cambio.</li>
+            <li>Riesgo de rutas obsoletas o incorrectas.</li>
+          </ul>
+        </div>
+      </div>
+
+      <nav class="topic-nav" aria-label="Navegación entre temas">
+        <span></span>
+        <a class="topic-nav__next" href="topologia.html">
+          <span class="topic-nav__label">Siguiente</span>
+          <span class="topic-nav__title">Topología y Direccionamiento IP →</span>
+        </a>
+      </nav>
+    </article>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© <span id="current-year">2026</span> Enrutamiento Estático · Manejo de Redes Avanzadas · ITECSUR</p>
+      <p class="site-footer__meta">Material académico · TSUDS · 5.º Semestre</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

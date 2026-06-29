@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Configuración de enrutamiento estático mediante interfaz gráfica en Cisco Packet Tracer.">
+  <title>Interfaz Gráfica | Enrutamiento Estático</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a class="nav__brand" href="../index.html">
+        <span class="nav__icon" aria-hidden="true">⬡</span>
+        Enrutamiento Estático
+      </a>
+      <button class="nav__toggle" type="button" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__links">
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="fundamentos.html">Fundamentos</a></li>
+        <li><a href="topologia.html">Topología</a></li>
+        <li><a href="configuracion-cli.html">CLI</a></li>
+        <li><a href="interfaz-grafica.html">GUI</a></li>
+        <li><a href="verificacion.html">Verificación</a></li>
+        <li><a href="laboratorio.html">Laboratorio</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <a href="../index.html">Inicio</a>
+        <span>/</span>
+        <span>Interfaz gráfica</span>
+      </nav>
+      <p class="hero__badge">Tema 04</p>
+      <h1>Interfaz Gráfica en Packet Tracer</h1>
+      <p class="page-hero__lead">
+        Alternativa visual al CLI: configuración de interfaces y rutas estáticas desde la pestaña
+        <strong>Config</strong> de cada router, con equivalencia en comandos IOS.
+      </p>
+    </div>
+  </section>
+
+  <div class="container page-layout">
+    <aside class="sidebar">
+      <h2>Temas</h2>
+      <a href="fundamentos.html">01 · Fundamentos</a>
+      <a href="topologia.html">02 · Topología IP</a>
+      <a href="configuracion-cli.html">03 · Configuración CLI</a>
+      <a class="is-active" href="interfaz-grafica.html">04 · Interfaz gráfica</a>
+      <a href="verificacion.html">05 · Verificación</a>
+      <a href="laboratorio.html">06 · Laboratorio</a>
+    </aside>
+
+    <article class="page-content">
+      <h2>Acceder a la configuración gráfica</h2>
+      <p>
+        En Cisco Packet Tracer, haz clic sobre un router y abre la ventana de propiedades.
+        Selecciona la pestaña <strong>Config</strong>. En el panel izquierdo encontrarás las secciones:
+      </p>
+      <ul class="styled-list">
+        <li><strong>GLOBAL</strong> — ajustes generales del dispositivo.</li>
+        <li><strong>ROUTING / ENRUTAMIENTO → Estático</strong> — tabla de rutas estáticas.</li>
+        <li><strong>INTERFACE</strong> — configuración IP de cada puerto GigabitEthernet.</li>
+      </ul>
+
+      <h2>Configurar una interfaz (GUI)</h2>
+      <p>
+        Para asignar IP a un enlace WAN, selecciona la interfaz deseada (por ejemplo
+        <code>GigabitEthernet0/1</code>), activa el puerto y completa los campos IPv4:
+      </p>
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Campo GUI</th>
+              <th>Valor ejemplo (Router0 Gig0/1)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Port Status</td>
+              <td>On</td>
+            </tr>
+            <tr>
+              <td>IPv4 Address</td>
+              <td><code>192.168.110.1</code></td>
+            </tr>
+            <tr>
+              <td>Subnet Mask</td>
+              <td><code>255.255.255.0</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <figure class="figure-showcase">
+        <button class="gallery__trigger" type="button" data-src="../Capturas/5.jpg" data-caption="Configuración de interfaz GigabitEthernet0/1 en Router0">
+          <img src="../Capturas/5.jpg" alt="Interfaz gráfica de Packet Tracer configurando GigabitEthernet0/1 con IP 192.168.110.1" loading="lazy">
+        </button>
+        <figcaption>Configuración de interfaz: IP 192.168.110.1/24 en GigabitEthernet0/1 de Router0. Abajo se muestran los comandos IOS equivalentes.</figcaption>
+      </figure>
+
+      <h2>Agregar rutas estáticas (GUI)</h2>
+      <p>
+        En el menú <strong>ENRUTAMIENTO → Estático</strong>, completa los campos y pulsa
+        <strong>Agregar</strong>:
+      </p>
+      <ul class="styled-list">
+        <li><strong>Red:</strong> dirección de red destino (ej. <code>192.168.200.0</code>).</li>
+        <li><strong>Máscara:</strong> máscara de subred (ej. <code>255.255.255.0</code>).</li>
+        <li><strong>Siguiente salto:</strong> IP del router vecino (ej. <code>192.168.110.2</code>).</li>
+      </ul>
+
+      <div class="figure-grid">
+        <figure class="figure-showcase">
+          <button class="gallery__trigger" type="button" data-src="../Capturas/1.jpeg" data-caption="Rutas estáticas en Router0">
+            <img src="../Capturas/1.jpeg" alt="Rutas estáticas configuradas en Router0 mediante GUI" loading="lazy">
+          </button>
+          <figcaption>Router0: rutas hacia Red 2 y Red 3.</figcaption>
+        </figure>
+        <figure class="figure-showcase">
+          <button class="gallery__trigger" type="button" data-src="../Capturas/2.jpeg" data-caption="Rutas estáticas en Router1">
+            <img src="../Capturas/2.jpeg" alt="Rutas estáticas configuradas en Router1 mediante GUI" loading="lazy">
+          </button>
+          <figcaption>Router1: rutas hacia Red 1 y Red 2.</figcaption>
+        </figure>
+      </div>
+
+      <figure class="figure-showcase">
+        <button class="gallery__trigger" type="button" data-src="../Capturas/3.jpeg" data-caption="Rutas estáticas en Router2">
+          <img src="../Capturas/3.jpeg" alt="Rutas estáticas configuradas en Router2 mediante GUI" loading="lazy">
+        </button>
+        <figcaption>Router2: rutas hacia Red 1 y Red 3. Cada tabla refleja las redes remotas que ese router debe conocer.</figcaption>
+      </figure>
+
+      <h2>Comandos IOS equivalentes</h2>
+      <p>
+        Packet Tracer muestra en la parte inferior de la ventana Config los
+        <strong>Equivalent IOS Commands</strong>. Esto permite relacionar cada acción gráfica
+        con su comando CLI correspondiente, facilitando el aprendizaje de ambos métodos.
+      </p>
+      <pre class="code-block"><code>! Lo que agregas en GUI se traduce a:
+Router(config)# ip route 192.168.200.0 255.255.255.0 192.168.110.2
+Router(config)# ip route 192.168.210.0 255.255.255.0 192.168.205.2
+
+! Configuración de interfaz en GUI equivale a:
+Router(config)# interface GigabitEthernet0/1
+Router(config-if)# ip address 192.168.110.1 255.255.255.0
+Router(config-if)# no shutdown</code></pre>
+
+      <div class="callout">
+        <p>La GUI y el CLI producen el mismo resultado. Se recomienda dominar ambos: la interfaz gráfica acelera el laboratorio; el CLI es el estándar en equipos reales.</p>
+      </div>
+
+      <nav class="topic-nav" aria-label="Navegación entre temas">
+        <a href="configuracion-cli.html">
+          <span class="topic-nav__label">Anterior</span>
+          <span class="topic-nav__title">← Configuración CLI</span>
+        </a>
+        <a class="topic-nav__next" href="verificacion.html">
+          <span class="topic-nav__label">Siguiente</span>
+          <span class="topic-nav__title">Verificación →</span>
+        </a>
+      </nav>
+    </article>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© <span id="current-year">2026</span> Enrutamiento Estático · Manejo de Redes Avanzadas · ITECSUR</p>
+      <p class="site-footer__meta">Material académico · TSUDS · 5.º Semestre</p>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox" hidden aria-hidden="true">
+    <button class="lightbox__close" type="button" aria-label="Cerrar imagen">&times;</button>
+    <figure class="lightbox__figure">
+      <img class="lightbox__img" src="" alt="">
+      <figcaption class="lightbox__caption"></figcaption>
+    </figure>
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

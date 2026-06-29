@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Configuración de enrutamiento estático por CLI en Cisco IOS para el laboratorio Packet Tracer.">
+  <title>Configuración CLI | Enrutamiento Estático</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a class="nav__brand" href="../index.html">
+        <span class="nav__icon" aria-hidden="true">⬡</span>
+        Enrutamiento Estático
+      </a>
+      <button class="nav__toggle" type="button" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__links">
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="fundamentos.html">Fundamentos</a></li>
+        <li><a href="topologia.html">Topología</a></li>
+        <li><a href="configuracion-cli.html">CLI</a></li>
+        <li><a href="interfaz-grafica.html">GUI</a></li>
+        <li><a href="verificacion.html">Verificación</a></li>
+        <li><a href="laboratorio.html">Laboratorio</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <a href="../index.html">Inicio</a>
+        <span>/</span>
+        <span>Configuración CLI</span>
+      </nav>
+      <p class="hero__badge">Tema 03</p>
+      <h1>Configuración por Línea de Comandos</h1>
+      <p class="page-hero__lead">
+        Comandos Cisco IOS para configurar interfaces y rutas estáticas en Router0, Router1 y Router2
+        del escenario de laboratorio.
+      </p>
+    </div>
+  </section>
+
+  <div class="container page-layout">
+    <aside class="sidebar">
+      <h2>Temas</h2>
+      <a href="fundamentos.html">01 · Fundamentos</a>
+      <a href="topologia.html">02 · Topología IP</a>
+      <a class="is-active" href="configuracion-cli.html">03 · Configuración CLI</a>
+      <a href="interfaz-grafica.html">04 · Interfaz gráfica</a>
+      <a href="verificacion.html">05 · Verificación</a>
+      <a href="laboratorio.html">06 · Laboratorio</a>
+    </aside>
+
+    <article class="page-content">
+      <h2>Sintaxis del comando</h2>
+      <pre class="code-block"><code>Router(config)# ip route &lt;red_destino&gt; &lt;máscara&gt; &lt;next-hop&gt; [distancia_administrativa]</code></pre>
+      <p>
+        El comando se ejecuta en modo de configuración global. La distancia administrativa es
+        opcional; si no se indica, el valor por defecto es 1.
+      </p>
+
+      <h2>Router0 — Red 1</h2>
+      <p>Gateway de la LAN <code>192.168.100.0/24</code>. Conectado a Router2 y Router1 por enlaces WAN.</p>
+      <pre class="code-block"><code>enable
+configure terminal
+hostname Router0
+
+! Interfaz LAN Red 1
+interface GigabitEthernet0/0
+ ip address 192.168.100.1 255.255.255.0
+ no shutdown
+ exit
+
+! Enlace hacia Router2 (192.168.110.0/24)
+interface GigabitEthernet0/1
+ ip address 192.168.110.1 255.255.255.0
+ no shutdown
+ exit
+
+! Enlace hacia Router1 (192.168.205.0/24)
+interface GigabitEthernet0/2
+ ip address 192.168.205.1 255.255.255.0
+ no shutdown
+ exit
+
+! Rutas estáticas hacia redes remotas
+ip route 192.168.200.0 255.255.255.0 192.168.110.2
+ip route 192.168.210.0 255.255.255.0 192.168.205.2
+
+end
+write memory</code></pre>
+
+      <h2>Router2 — Red 2</h2>
+      <p>Gateway de la LAN <code>192.168.200.0/24</code>. Router central del triángulo.</p>
+      <pre class="code-block"><code>enable
+configure terminal
+hostname Router2
+
+interface GigabitEthernet0/0
+ ip address 192.168.200.4 255.255.255.0
+ no shutdown
+ exit
+
+interface GigabitEthernet0/1
+ ip address 192.168.110.2 255.255.255.0
+ no shutdown
+ exit
+
+interface GigabitEthernet0/2
+ ip address 192.168.150.1 255.255.255.0
+ no shutdown
+ exit
+
+ip route 192.168.100.0 255.255.255.0 192.168.110.1
+ip route 192.168.210.0 255.255.255.0 192.168.150.2
+
+end
+write memory</code></pre>
+
+      <h2>Router1 — Red 3</h2>
+      <p>Gateway de la LAN <code>192.168.210.0/24</code>.</p>
+      <pre class="code-block"><code>enable
+configure terminal
+hostname Router1
+
+interface GigabitEthernet0/0
+ ip address 192.168.210.7 255.255.255.0
+ no shutdown
+ exit
+
+interface GigabitEthernet0/1
+ ip address 192.168.150.2 255.255.255.0
+ no shutdown
+ exit
+
+interface GigabitEthernet0/2
+ ip address 192.168.205.2 255.255.255.0
+ no shutdown
+ exit
+
+ip route 192.168.100.0 255.255.255.0 192.168.205.1
+ip route 192.168.200.0 255.255.255.0 192.168.150.1
+
+end
+write memory</code></pre>
+
+      <h2>Resumen de rutas estáticas</h2>
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Router</th>
+              <th>Red destino</th>
+              <th>Next-hop</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Router0</td>
+              <td><code>192.168.200.0/24</code></td>
+              <td><code>192.168.110.2</code></td>
+            </tr>
+            <tr>
+              <td>Router0</td>
+              <td><code>192.168.210.0/24</code></td>
+              <td><code>192.168.205.2</code></td>
+            </tr>
+            <tr>
+              <td>Router2</td>
+              <td><code>192.168.100.0/24</code></td>
+              <td><code>192.168.110.1</code></td>
+            </tr>
+            <tr>
+              <td>Router2</td>
+              <td><code>192.168.210.0/24</code></td>
+              <td><code>192.168.150.2</code></td>
+            </tr>
+            <tr>
+              <td>Router1</td>
+              <td><code>192.168.100.0/24</code></td>
+              <td><code>192.168.205.1</code></td>
+            </tr>
+            <tr>
+              <td>Router1</td>
+              <td><code>192.168.200.0/24</code></td>
+              <td><code>192.168.150.1</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <p>Configura primero las <strong>interfaces</strong> y luego las <strong>rutas</strong>. Un next-hop debe ser alcanzable; de lo contrario, la ruta aparecerá como inactiva en la tabla.</p>
+      </div>
+
+      <h2>Configuración de hosts (PCs)</h2>
+      <p>Cada PC debe tener IP, máscara y gateway por defecto apuntando al router de su LAN:</p>
+      <pre class="code-block"><code>! PC0 — Red 1
+IP Address:  192.168.100.2
+Subnet Mask: 255.255.255.0
+Default GW:  192.168.100.1
+
+! PC1 — Red 2
+IP Address:  192.168.200.5
+Subnet Mask: 255.255.255.0
+Default GW:  192.168.200.4
+
+! PC2 — Red 3
+IP Address:  192.168.210.8
+Subnet Mask: 255.255.255.0
+Default GW:  192.168.210.7</code></pre>
+
+      <nav class="topic-nav" aria-label="Navegación entre temas">
+        <a href="topologia.html">
+          <span class="topic-nav__label">Anterior</span>
+          <span class="topic-nav__title">← Topología IP</span>
+        </a>
+        <a class="topic-nav__next" href="interfaz-grafica.html">
+          <span class="topic-nav__label">Siguiente</span>
+          <span class="topic-nav__title">Interfaz gráfica →</span>
+        </a>
+      </nav>
+    </article>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© <span id="current-year">2026</span> Enrutamiento Estático · Manejo de Redes Avanzadas · ITECSUR</p>
+      <p class="site-footer__meta">Material académico · TSUDS · 5.º Semestre</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
